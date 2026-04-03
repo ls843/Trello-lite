@@ -1,0 +1,72 @@
+.task {
+  position: relative;
+
+  background: #ffffff;
+  border-radius: 10px;
+  padding: 12px;
+
+  margin-bottom: 10px;
+
+  display: flex;
+  justify-content: space-between;
+  align-items: flex-start;
+
+  cursor: pointer;
+  transition: transform 0.15s ease, box-shadow 0.15s ease;
+}
+
+.task:hover {
+  transform: translateY(-3px);
+  box-shadow: 0 8px 18px rgba(0,0,0,0.15);
+}
+
+.task:active {
+  transform: scale(0.98);
+}
+
+/* content */
+.task-content {
+  display: flex;
+  flex-direction: column;
+  gap: 4px;
+}
+
+.task-title {
+  font-size: 14px;
+  font-weight: 500;
+  color: #172b4d;
+}
+
+.task-meta {
+  font-size: 12px;
+  color: #5e6c84;
+}
+
+/* delete button */
+.delete-btn {
+  background: transparent;
+  border: none;
+  cursor: pointer;
+
+  opacity: 0;
+  transition: 0.2s;
+
+  font-size: 12px;
+}
+
+.task:hover .delete-btn {
+  opacity: 1;
+}
+
+/* PRIORITY COLORS */
+.high {
+  border-left: 5px solid #e74c3c;
+}
+
+.medium {
+  border-left: 5px solid #f1c40f;
+}
+
+.low {
+  border-left: 5px solid #2ecc71;
+}

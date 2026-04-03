@@ -1,0 +1,19 @@
+<div
+  class="task"
+  [ngClass]="[
+    getPriorityClass(task.priority),
+    isOverdue() ? 'overdue' : '',
+    isDueSoon() ? 'due-soon' : ''
+  ]"
+  (click)="onEdit($event)"
+>
+  <div class="task-content">
+    <div class="task-title">{{ task.title }}</div>
+
+    <div class="task-meta" *ngIf="task.deadline">
+      📅 {{ getDueText() }}
+    </div>
+  </div>
+
+  <button class="delete-btn" (click)="onDelete($event)">❌</button>
+</div>

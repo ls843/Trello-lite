@@ -1,0 +1,25 @@
+<div
+  class="column"
+  [id]="status"
+  cdkDropList
+  [cdkDropListData]="tasks"
+  [cdkDropListConnectedTo]="connectedTo"
+  (cdkDropListDropped)="drop($event)"
+>
+  <h3>
+    {{ title }}
+    <span class="task-count">{{ tasks.length }}</span>
+  </h3>
+
+  <div *ngIf="tasks.length === 0" class="empty-state">
+    No tasks 🚀
+  </div>
+
+  <app-task-card
+    *ngFor="let task of tasks"
+    cdkDrag
+    [task]="task"
+    (edit)="editTask.emit($event)"
+    (delete)="deleteTask.emit($event)"
+  ></app-task-card>
+</div>

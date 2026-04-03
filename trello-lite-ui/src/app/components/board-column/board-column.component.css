@@ -1,0 +1,88 @@
+.column {
+  flex: 1;
+  min-width: 370px;
+  max-width: 320px;
+
+  background: #ebecf0;
+  border-radius: 12px;
+
+  padding: 12px;
+
+  display: flex;
+  flex-direction: column;
+
+  max-height: 100%;
+}
+
+/* header */
+.column h3 {
+  font-size: 14px;
+  font-weight: 600;
+  color: #172b4d;
+
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+
+  margin-bottom: 10px;
+}
+
+/* task count badge */
+.task-count {
+  background: #dfe1e6;
+  padding: 2px 8px;
+  border-radius: 6px;
+  font-size: 12px;
+}
+
+/* scrollable area */
+.column {
+  overflow-y: auto;
+    animation: fadeInUp 0.4s ease;
+}
+
+@keyframes fadeInUp {
+  from {
+    opacity: 0;
+    transform: translateY(15px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.column::-webkit-scrollbar {
+  width: 6px;
+}
+
+.column::-webkit-scrollbar-thumb {
+  background: #c1c7d0;
+  border-radius: 10px;
+}
+
+/* empty state */
+.empty-state {
+  font-size: 13px;
+  color: #5e6c84;
+  text-align: center;
+  margin-top: 20px;
+}
+
+.cdk-drag {
+  transition: transform 0.2s ease;
+}
+
+.cdk-drag-preview {
+  border-radius: 10px;
+  transform: rotate(2deg) scale(1.05);
+  box-shadow: 0 10px 25px rgba(0,0,0,0.25);
+}
+
+.cdk-drag-placeholder {
+  opacity: 0.2;
+}
+
+.cdk-drop-list-dragging .task {
+  transition: transform 0.2s ease;
+}

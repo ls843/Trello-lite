@@ -1,0 +1,123 @@
+<div class="board-header">
+  <div class="header-left">
+    <div class="board-dropdown">
+      <select [(ngModel)]="selectedBoardId" (change)="onBoardChange()">
+        <option *ngFor="let b of boards" [value]="b.id">
+          {{ b.name }}
+        </option>
+      </select>
+    </div>
+
+    <button class="icon-btn delete" (click)="deleteBoard()">🗑</button>
+    <button class="icon-btn add" (click)="openBoardModal()">＋</button>
+  </div>
+
+  <div class="header-center">
+    <span class="app-title">TrelloLite</span>
+  </div>
+
+  <div class="header-right">
+    <div class="notification-bell" (click)="toggleNotificationPanel()">
+      🔔
+      <span *ngIf="unreadCount > 0" class="badge">{{ unreadCount }}</span>
+    </div>
+
+    <button class="primary-btn" (click)="openModal()">+ Add Task</button>
+  </div>
+</div>
+
+<div class="notification-panel" *ngIf="showNotificationPanel">
+  <h4>Notifications</h4>
+
+  <div *ngIf="notificationHistory.length === 0">No notifications</div>
+
+  <div
+    *ngFor="let n of notificationHistory"
+    class="notification-item"
+    [class.unread]="!n.read"
+    (click)="markAsRead(n)"
+  >
+    {{ n.message }}
+  </div>
+</div>
+
+<div class="notification-container">
+  <div *ngFor="let n of notifications" class="notification">
+    {{ n.message }}
+  </div>
+</div>
+
+<div class="board">
+  <app-board-column
+    title="To-Do"
+    [tasks]="todo"
+    status="TODO"
+    [connectedTo]="['IN_PROGRESS', 'DONE']"
+    (dropTask)="handleDrop($event)"
+    (editTask)="openEditModal($event)"
+    (deleteTask)="deleteTask($event.task, $event.event)"
+  ></app-board-column>
+
+  <app-board-column
+    title="In Progress"
+    [tasks]="inProgress"
+    status="IN_PROGRESS"
+    [connectedTo]="['TODO', 'DONE']"
+    (dropTask)="handleDrop($event)"
+    (editTask)="openEditModal($event)"
+    (deleteTask)="deleteTask($event.task, $event.event)"
+  ></app-board-column>
+
+  <app-board-column
+    title="Done"
+    [tasks]="done"
+    status="DONE"
+    [connectedTo]="['TODO', 'IN_PROGRESS']"
+    (dropTask)="handleDrop($event)"
+    (editTask)="openEditModal($event)"
+    (deleteTask)="deleteTask($event.task, $event.event)"
+  ></app-board-column>
+</div>
+
+<div class="modal-backdrop" *ngIf="showModal">
+  <div class="modal">
+    <h2>{{ isEditMode ? 'Edit Task' : 'Create Task' }}</h2>
+
+    <label>Title</label>
+    <input [(ngModel)]="modalData.title" placeholder="Task title" />
+
+    <label>Description</label>
+    <textarea [(ngModel)]="modalData.description" placeholder="Description"></textarea>
+
+    <label>Priority</label>
+    <select [(ngModel)]="modalData.priority">
+      <option value="LOW">Low</option>
+      <option value="MEDIUM">Medium</option>
+      <option value="HIGH">High</option>
+    </select>
+
+    <label>Due Date</label>
+    <input type="date" [(ngModel)]="modalData.deadline" />
+
+    <div class="modal-actions">
+      <button class="btn primary" (click)="saveTask()">
+        {{ isEditMode ? 'Update' : 'Save' }}
+      </button>
+      <button class="btn secondary" (click)="closeModal()">Cancel</button>
+    </div>
+  </div>
+</div>
+
+<div class="modal-backdrop" *ngIf="showBoardModal">
+  <div class="modal">
+    <h2>Create Board</h2>
+
+    <label>Board Name</label>
+    <input [(ngModel)]="newBoardName" placeholder="Enter board name" />
+
+    <div class="modal-actions">
+      <button class="btn primary" (click)="createBoard()">Create</button>
+      <button class="btn secondary" (click)="closeBoardModal()">Cancel</button>
+    </div>
+  </div>
+</div>
